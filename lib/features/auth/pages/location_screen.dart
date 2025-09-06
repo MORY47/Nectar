@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_application_3/core/constants/app_images.dart';
-import 'package:flutter_application_3/core/functions/navigation.dart';
-import 'package:flutter_application_3/core/utils/colors.dart';
-import 'package:flutter_application_3/core/widgets/submit_button.dart';
-import 'package:flutter_application_3/features/auth/pages/login_screen.dart';
+import 'package:nectar_ui/core/constants/app_images.dart';
+import 'package:nectar_ui/core/functions/navigation.dart';
+import 'package:nectar_ui/core/utils/colors.dart';
+import 'package:nectar_ui/core/widgets/submit_button.dart';
+import 'package:nectar_ui/features/auth/pages/login_screen.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});

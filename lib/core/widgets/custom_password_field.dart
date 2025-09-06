@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/core/utils/colors.dart';
+import 'package:nectar_ui/core/utils/colors.dart';
 
 class CustomPasswordField extends StatefulWidget {
   const CustomPasswordField({
@@ -8,12 +8,14 @@ class CustomPasswordField extends StatefulWidget {
     this.hint,
     this.prefix,
     this.suffix,
+    this.controller,
   });
 
   final String? label;
   final String? hint;
   final Widget? prefix;
   final Widget? suffix;
+  final TextEditingController? controller;
 
   @override
   State<CustomPasswordField> createState() => _CustomPasswordFieldState();
@@ -24,12 +26,13 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       obscureText: obscureText,
-            validator: (value) {
+      validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please Enter Your Password';
+          return 'Please enter your Password';
         } else if (value.length < 6) {
-          return 'Password must be at least 6 charactrs';
+          return 'Password must be at least 6 characters';
         }
         return null;
       },
@@ -43,32 +46,10 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
               obscureText = !obscureText;
             });
           },
-          icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
-        ),
-        labelStyle: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: AppColors.greyColor,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.primaryColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.primaryColor),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.red),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.red),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.primaryColor),
+          icon: Icon(
+            obscureText ? Icons.visibility_off : Icons.visibility,
+            color: AppColors.greyColor,
+          ),
         ),
       ),
     );

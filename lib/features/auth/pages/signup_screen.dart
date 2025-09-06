@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_application_3/core/constants/app_images.dart';
-import 'package:flutter_application_3/core/functions/navigation.dart';
-import 'package:flutter_application_3/core/utils/colors.dart';
-import 'package:flutter_application_3/core/widgets/custom_password_field.dart';
-import 'package:flutter_application_3/core/widgets/custom_text_field.dart';
-import 'package:flutter_application_3/core/widgets/main_button.dart';
-import 'package:flutter_application_3/features/auth/pages/login_screen.dart';
+import 'package:nectar_ui/core/constants/app_images.dart';
+import 'package:nectar_ui/core/functions/navigation.dart';
+import 'package:nectar_ui/core/utils/colors.dart';
+import 'package:nectar_ui/core/widgets/custom_password_field.dart';
+import 'package:nectar_ui/core/widgets/custom_text_field.dart';
+import 'package:nectar_ui/core/widgets/main_button.dart';
+import 'package:nectar_ui/features/auth/pages/login_screen.dart';
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+// L>R>L>R>L>
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var passwordConfirmationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24.89),
+          padding: const EdgeInsets.all(24),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -39,24 +51,46 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Enter your credentials to continue',
+                      'Create your account',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w400,
                         color: AppColors.greyColor,
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 40),
-                CustomTextField(label: 'Username'),
+                CustomTextField(
+                  controller: nameController,
+                  label: 'Full Name',
+                  prefix: Icon(Icons.person, color: AppColors.primaryColor),
+                ),
                 SizedBox(height: 20),
-                CustomTextField(label: 'Email'),
+                CustomTextField(
+                  controller: emailController,
+                  label: 'Email',
+                  prefix: Icon(Icons.email, color: AppColors.primaryColor),
+                ),
                 SizedBox(height: 20),
-                CustomPasswordField(label: 'Password'),
-            
-                SizedBox(height: 20),
-                MainButton(text: 'Sign Up', onPressed: () {}),
+                CustomPasswordField(
+                  controller: passwordController,
+                  label: 'Password',
+                  prefix: Icon(Icons.lock, color: AppColors.primaryColor),
+                ),
+
+                SizedBox(height: 40),
+                MainButton(
+                  text: 'SignUp',
+                  onPressed: () {
+                    pushWithReplacement(
+                      context,
+                      LoginScreen(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      ),
+                    );
+                  },
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -70,10 +104,10 @@ class SignupScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        pushWithReplacement(context, LoginScreen());
+                        pushWithReplacement(context, const LoginScreen());
                       },
                       child: Text(
-                        'Login',
+                        'LogIn',
                         style: TextStyle(
                           color: AppColors.primaryColor,
                           fontSize: 14,

@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_application_3/core/constants/app_images.dart';
-import 'package:flutter_application_3/core/functions/email_validation.dart';
-import 'package:flutter_application_3/core/functions/navigation.dart';
-import 'package:flutter_application_3/core/utils/colors.dart';
-import 'package:flutter_application_3/core/widgets/custom_password_field.dart';
-import 'package:flutter_application_3/core/widgets/custom_text_field.dart';
-import 'package:flutter_application_3/core/widgets/main_button.dart';
-import 'package:flutter_application_3/features/auth/pages/signup_screen.dart';
+import 'package:gap/gap.dart';
+import 'package:nectar_ui/core/constants/app_images.dart';
+import 'package:nectar_ui/core/functions/email_validation.dart';
+import 'package:nectar_ui/core/functions/navigation.dart';
+import 'package:nectar_ui/core/utils/colors.dart';
+import 'package:nectar_ui/core/widgets/custom_password_field.dart';
+import 'package:nectar_ui/core/widgets/custom_text_field.dart';
+import 'package:nectar_ui/core/widgets/main_button.dart';
+import 'package:nectar_ui/features/auth/pages/signup_screen.dart';
+import 'package:nectar_ui/features/main/main_app_screen.dart';
+
+// Wrap Column with Form Widget
+// create a form key and pass it to Form Widget
+// add validation to email and password ("validator")
+// check if form is valid when Button is pressed
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, this.email, this.password});
+
+  final String? email;
+  final String? password;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -18,12 +28,22 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var formKey = GlobalKey<FormState>();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.text = widget.email ?? "";
+    passwordController.text = widget.password ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24.89),
+          padding: const EdgeInsets.all(24),
           child: SingleChildScrollView(
             child: Form(
               key: formKey,
@@ -51,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Enter your emails and password',
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w400,
                           color: AppColors.greyColor,
                         ),
                       ),
@@ -59,18 +78,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 40),
                   CustomTextField(
+                    controller: emailController,
                     label: 'Email',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter Your Email';
+                        return 'Please enter your email';
                       } else if (!validateEmail(value)) {
-                        return 'Please Enter a Valid Email';
+                        return 'Please enter a valid email';
                       }
                       return null;
                     },
+                    prefix: Icon(Icons.email, color: AppColors.primaryColor),
                   ),
-                  SizedBox(height: 20),
-                  CustomPasswordField(label: 'Password'),
+                  Gap(20),
+                  CustomPasswordField(
+                    controller: passwordController,
+                    label: 'Password',
+                    prefix: Icon(Icons.lock, color: AppColors.primaryColor),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -78,22 +103,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {},
                         child: Text(
                           'Forgot Password?',
-                          style: TextStyle(color: AppColors.greyColor),
+                          style: TextStyle(color: AppColors.darkColor),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
-                  MainButton(text: 'Log In', onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      
-                    }
-                  }),
+                  MainButton(
+                    text: 'Login',
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        pushAndRemoveUntil(context, MainAppScreen());
+                      }
+                    },
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Don’t have an account?',
+                        'Don\'t have an account?',
                         style: TextStyle(
                           color: AppColors.darkColor,
                           fontSize: 14,
@@ -102,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          pushWithReplacement(context, SignupScreen());
+                          pushWithReplacement(context, SignUpScreen());
                         },
                         child: Text(
                           'Sign Up',

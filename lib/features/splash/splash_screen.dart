@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_application_3/core/constants/app_images.dart';
-import 'package:flutter_application_3/core/functions/navigation.dart';
-import 'package:flutter_application_3/core/utils/colors.dart';
-import 'package:flutter_application_3/features/auth/pages/location_screen.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:nectar_ui/core/constants/app_images.dart';
+import 'package:nectar_ui/core/functions/navigation.dart';
+import 'package:nectar_ui/core/utils/colors.dart';
+import 'package:nectar_ui/features/welcome/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,10 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(seconds: 3), () {
-      if (!mounted) return; 
-      pushWithReplacement(context, const LocationScreen());
+    // delay with 3 sec and navigate to home screen
+    Future.delayed(Duration(seconds: 3), () {
+      // navigate to home screen
+      pushWithReplacement(context, const WelcomeScreen());
     });
   }
 
@@ -27,9 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      body: Center(
-        child: SvgPicture.asset(AppImages.logoSvg),
-      ),
+      body: Center(child: SvgPicture.asset(AppImages.logoSvg, width: 250)),
     );
   }
 }
